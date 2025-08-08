@@ -1,0 +1,84 @@
+[gd_scene load_steps=12 format=3 uid="uid://bqli6s54yqrnb"]
+
+[ext_resource type="Texture2D" uid="uid://52wrtnoohixf" path="res://circle.png" id="1_1y2ql"]
+[ext_resource type="Script" path="res://Wheel.gd" id="1_ptv23"]
+[ext_resource type="Script" path="res://Weight.gd" id="3_ktqe7"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ep7ie"]
+rough = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lo8ow"]
+size = Vector2(1189, 175.5)
+
+[sub_resource type="QuadMesh" id="QuadMesh_nmneu"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hamdq"]
+rough = true
+bounce = 0.5
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jqfnu"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_qqatq"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_dplfv"]
+bounce = 0.71
+
+[sub_resource type="QuadMesh" id="QuadMesh_0ujaq"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_ep7ie")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(574, 646.75)
+scale = Vector2(0.8, 1)
+shape = SubResource("RectangleShape2D_lo8ow")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="StaticBody2D"]
+position = Vector2(574, 645)
+scale = Vector2(952, 172)
+mesh = SubResource("QuadMesh_nmneu")
+
+[node name="Wheel" type="RigidBody2D" parent="."]
+position = Vector2(565, 516)
+mass = 3.11
+physics_material_override = SubResource("PhysicsMaterial_hamdq")
+script = ExtResource("1_ptv23")
+player_controlled = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wheel"]
+scale = Vector2(4, 4)
+shape = SubResource("CircleShape2D_jqfnu")
+
+[node name="Sprite2D" type="Sprite2D" parent="Wheel"]
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("1_1y2ql")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="Wheel"]
+node_a = NodePath("..")
+node_b = NodePath("../../Weight")
+disable_collision = false
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Wheel"]
+scale = Vector2(30, 30)
+mesh = SubResource("QuadMesh_qqatq")
+
+[node name="Weight" type="RigidBody2D" parent="."]
+position = Vector2(564, 158)
+mass = 3.11
+physics_material_override = SubResource("PhysicsMaterial_dplfv")
+script = ExtResource("3_ktqe7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Weight"]
+scale = Vector2(4, 4)
+shape = SubResource("CircleShape2D_jqfnu")
+
+[node name="Sprite2D" type="Sprite2D" parent="Weight"]
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("1_1y2ql")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Weight"]
+position = Vector2(0, 179.5)
+scale = Vector2(7.99999, 291)
+mesh = SubResource("QuadMesh_0ujaq")
